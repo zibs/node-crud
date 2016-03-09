@@ -4,7 +4,8 @@ var router = express.Router();
 
 router.get("/new", function(request, response, next) {
   // response object, can call end on it, we can finish the request and can send something back to the user. End(text) Render(template) Redirect(url).
-  response.end("Create New Question");
+  // response.end("Create New Question");
+  response.render("questions/new");
 });
 
 // this is like an instance variable so that we can pass it around to be used in other files. We are adding more definitions to the router.

@@ -20,18 +20,18 @@ var bodyParser = require('body-parser');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var questions = require("./routes/questions");
+
 //Here is how we define the actual routes of what we are using.
+var app = express();
+
+
 app.use('/', routes);
 app.use('/users', users);
-app.use('/questions/', questions);
-
-
+app.use('/questions', questions);
 
 // this is where the express function() is invoked. It creates our app
-var app = express();
-//
 
-// // view engine setup
+// view engine setup
 
 // this is telling express that our views are over here in this views file.
 app.set('views', path.join(__dirname, 'views'));

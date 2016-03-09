@@ -1,0 +1,14 @@
+extends ../layout
+
+block content
+  h1.text-lg-center Create New Question 
+  form(action="/questions" method="POST")
+    .form-group
+      label(for="title") Title 
+      input(type="text" id="title" name="title" class="form-control")
+    .form-group
+      label(for="body") Body 
+      input(type="text" id="body" name="body" class="form-control")
+    input(type="submit" value="Create Question" class="btn btn-primary-outline btn-block")  
+      
+  
