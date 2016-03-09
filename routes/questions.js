@@ -6,28 +6,38 @@ var Question = require("../models/question");
 router.get("/new", function(request, response, next) {
   // response object, can call end on it, we can finish the request and can send something back to the user. End(text) Render(template) Redirect(url).
   // response.end("Create New Question");
-  response.render("questions/new");
+  response.render("questions/new", {errors: {}});
 });
 
 router.post("/", function(request, response, next){
-  //
-  // for(var k in request) {
-  //   console.log(">>>>>>>>>>>>>>>>>>>>>>>>>");
-  //   console.log("1 >>>> " + k);
-  //   console.log("2 >>>> " + request[k]);
-  //   console.log(">>>>>>>>>>>>>>>>>>>>>>>>>");
-  // }
   var question = new Question({title: request.body.title,
                                body: request.body.body});
   question.save(function(err, question){
-    // response.end("Got it");
     if(err){
-      response.end("Got Errors!");
+      response.render("questions/new", {errors: err.errors});
     } else {
-        response.end(question._id.toString());
+        // response.end(question._id.toString());
+        response.redirect("/questions/" + question._id);
       }
   });
 });
+
+ router.get("/:id", function(req, res) {
+  Question.findOne({_id: req.params.id}, function(err, question) {
+    if(err) {
+      res.render('error', {message: "Error Happened",
+                          error: { status: 500}});
+    }
+    else {
+      if(question){
+      res.render("questions/show", {question: question});
+      } else {
+      res.render('error', {message: "Question Not Found",
+                        error: { status: 404}});
+      }
+    }
+  });
+ });
 
 // this is like an instance variable so that we can pass it around to be used in other files. We are adding more definitions to the router.
 module.exports = router;
