@@ -25,19 +25,52 @@ router.post("/", function(request, response, next){
  router.get("/:id", function(req, res) {
   Question.findOne({_id: req.params.id}, function(err, question) {
     if(err) {
-      res.render('error', {message: "Error Happened",
-                          error: { status: 500}});
+      res.render('error', {message: "Question Not Found",
+                          error: { status: 404}});
     }
     else {
-      if(question){
       res.render("questions/show", {question: question});
-      } else {
-      res.render('error', {message: "Question Not Found",
-                        error: { status: 404}});
-      }
     }
   });
  });
+
+  router.get("/:id/edit", function(req, res) {
+    Question.findOne({_id: req.params.id}, function(err, question){
+      if (err) { res.render('error', {message: "Error Happened",
+                                      error: { status: 404}});
+       }
+       else {
+         res.render("questions/edit", {question: question, errors: {} });
+       }
+    });
+  });
+
+  router.post("/:id", function(req, res) {
+    Question.findOne({_id: req.params.id}, function(err, question) {
+      if (err) {
+        res.render('error', {message: "Error Happened",
+                                        error: { status: 404}});
+      }
+      else {
+        question.title = req.body.title;
+        question.body = req.body.body;
+        question.save(function(err){
+          if(err){
+            res.render("questions/edit", {errors:err.errors,question: question});
+            }
+          else {
+            // response.end(question._id.toString());
+            res.redirect("/questions/" + question._id);
+            }
+        });
+      }
+    });
+
+    
+
+      // console.log("<<<<<<<<<<<<<<<<<<<<<");
+      // console.log(question);
+  });
 
 // this is like an instance variable so that we can pass it around to be used in other files. We are adding more definitions to the router.
 module.exports = router;

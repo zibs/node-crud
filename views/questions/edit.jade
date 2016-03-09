@@ -1,0 +1,14 @@
+extends ../layout
+block content
+
+  h1.text-lg-center Update Question
+  form(action="/questions/#{question._id}" method="POST")
+    .form-group
+      label(for="title") Title 
+      input(type="text" id="title" name="title" class="form-control" value=question.title)
+      if errors.title
+        .help-block= errors.title
+    .form-group
+      label(for="body") Body 
+      input(type="text" id="body" name="body" class="form-control" value=question.body)
+    input(type="submit" value="Update Question" class="btn btn-primary-outline btn-block")

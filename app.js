@@ -11,6 +11,7 @@ var logger = require('morgan');
 // handles cookies and parameters. Unlike Rack which parses it nicely for us, with cookies and paramaeters. Here we have to be explicit about which library we want to use.
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var methodOverride = require("method-override");
 
 var mongoose = require("mongoose");
 mongoose.connect("mongodb://localhost/AwesomeAnswers");
@@ -23,6 +24,7 @@ var questions = require("./routes/questions");
 var app = express();
 
 app.use(logger('dev'));
+app.use(methodOverride('_method'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
