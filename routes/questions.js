@@ -3,6 +3,9 @@ var router = express.Router();
 var Question = require("../models/question");
 // creating a route ^^ technically a controller.
 
+
+// router.get("/index", function())
+
 router.get("/new", function(request, response, next) {
   // response object, can call end on it, we can finish the request and can send something back to the user. End(text) Render(template) Redirect(url).
   // response.end("Create New Question");
@@ -45,7 +48,7 @@ router.post("/", function(request, response, next){
     });
   });
 
-  router.post("/:id", function(req, res) {
+  router.patch("/:id", function(req, res) {
     Question.findOne({_id: req.params.id}, function(err, question) {
       if (err) {
         res.render('error', {message: "Error Happened",
@@ -65,8 +68,6 @@ router.post("/", function(request, response, next){
         });
       }
     });
-
-    
 
       // console.log("<<<<<<<<<<<<<<<<<<<<<");
       // console.log(question);
