@@ -2,4 +2,7 @@ extend ../layout
 block content
   h1= question.title
   p= question.body
-  a(href="#{question._id}/edit") Edit
+  a(href="#{question._id}/edit" class="btn btn-info-outline") Edit Question
+    
+  form(action="/questions/#{question._id}?_method=delete" method="POST")
+    input(type="submit" value="Delete Question" class="btn btn-danger-outline")

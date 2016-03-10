@@ -1,0 +1,9 @@
+extends ../layout
+block content
+  //- "#{questions}"
+  ul
+  each val, index in questions
+    h1= val.title
+    a(href="/questions/#{val.id}/edit" class="btn btn-info-outline") Edit Question
+    a(href="questions/#{val._id}" class="btn btn-success-outline") View Question
+    

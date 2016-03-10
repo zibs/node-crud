@@ -4,7 +4,19 @@ var Question = require("../models/question");
 // creating a route ^^ technically a controller.
 
 
-// router.get("/index", function())
+router.get("/", function(req, res){
+  Question.find({}, function(errs, questions) {
+    if(errs) {
+      res.render("error", {message: "Error Happened!", error: {status: 500}});
+    } else {
+    // console.log(questions);
+    console.log(questions);
+    res.render("questions/index", { questions: questions });
+    }
+  });
+  // Question.find(err, questions) {}
+  // console.log(questions);
+});
 
 router.get("/new", function(request, response, next) {
   // response object, can call end on it, we can finish the request and can send something back to the user. End(text) Render(template) Redirect(url).
@@ -68,6 +80,24 @@ router.post("/", function(request, response, next){
         });
       }
     });
+
+    // router.destroy("/:id", function(req,res) {
+    //   Question.findOne({_id: req.params.id}).remove(function(err){
+    //     res.redirect("/questions");
+    //   });
+    // });
+    router.delete("/:id", function(req, res) {
+      Question.remove({_id: req.params.id}, function(err, question){
+        if (err) {
+          res.render("/questions" + question._id, { errors: err.errors, question: question});
+        }
+          else {
+            res.redirect("/questions");
+          }
+      });
+    });
+
+
 
       // console.log("<<<<<<<<<<<<<<<<<<<<<");
       // console.log(question);
