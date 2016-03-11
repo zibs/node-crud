@@ -97,10 +97,6 @@ router.post("/", function(request, response, next){
       });
     });
 
-
-
-      // console.log("<<<<<<<<<<<<<<<<<<<<<");
-      // console.log(question);
   });
 
 // this is like an instance variable so that we can pass it around to be used in other files. We are adding more definitions to the router.
